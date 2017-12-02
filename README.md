@@ -2,8 +2,6 @@
 
 [Kardan Adam Macerası](https://play.google.com/store/apps/details?id=com.hhy.game.snowman) oyunu basit olarak geliştirilmiş bir oyundur. Geliştirmek isteyen kişiler oyuna katkıda bulunabilirler.
 
-Kameradan renkleri gerçek zamanlı algılayarak size rengin adını söyler.
-
 Oyun Resimleri
 =======
 ![image](https://raw.githubusercontent.com/hhy89/KardanAdamMacerasi/master/Screenshots/1-menu.png)

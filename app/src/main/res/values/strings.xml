@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Kardan Adam Macerası</string>
+    <string name="default_record">0</string>
+    <string name="playgame">playGame</string>
+    <string name="record_image">record_image</string>
+    <string name="game_over">game_over</string>
+    <string name="howTo">howTo</string>
+    <string name="swipe">swipe</string>
+    <string name="back">back</string>
+    <string name="pause">Durduruldu</string>
+    <string name="howtoplay">Oyunu oynayabilmek için ekranda yukarı ya da aşağıya doğru kaydırmanız gerekmektedir. Çıkan engellere çarpmadan oynamaya devam edebilirsiniz.</string>
+</resources>

@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -21,7 +20,7 @@ import static android.os.SystemClock.sleep;
 public class Game {
     private Context context;
     private SurfaceHolder holder;
-    private Rect screen;
+    private Values values;
     private Resources resources;
     private ScrollableBackground background;
     private Player player;
@@ -36,9 +35,9 @@ public class Game {
     private float touchYup;
     private float touchYdown;
 
-    public Game(Context context, Rect screen, SurfaceHolder holder, Resources resources) {
+    public Game(Context context, Values values, SurfaceHolder holder, Resources resources) {
         this.context = context;
-        this.screen = screen;
+        this.values = values;
         this.holder = holder;
         this.resources = resources;
 
@@ -51,9 +50,7 @@ public class Game {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             touchYdown = event.getY();
 
-            if (new Rect(screen.width() / 10 * 9, screen.height() / 50,
-                    screen.width() / 50 * 49, screen.height() / 450 * 59)
-                    .contains(Math.round(event.getX()), Math.round(event.getY()))) {
+            if (values.getPauseButtonRect().contains(Math.round(event.getX()), Math.round(event.getY()))) {
                 if (gameRunning) {
                     gameRunning = false;
                     player.stopAnimation();
@@ -67,11 +64,11 @@ public class Game {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             touchYup = event.getY();
 
-            if ((touchYdown - touchYup > screen.height() / 80 * 7) && (touchYdown > screen.height() / 10 * 3)) {
+            if ((touchYdown - touchYup > values.getSwipeValue()) && (touchYdown > values.getSwipeValue2())) {
                 player.lineUp();
             }
 
-            if ((touchYdown - touchYup < -screen.height() / 80 * 7) && (touchYup > screen.height() / 10 * 3)) {
+            if ((touchYdown - touchYup < -values.getSwipeValue()) && (touchYup > values.getSwipeValue2())) {
                 player.lineDown();
             }
             touchYdown = 0;
@@ -131,27 +128,26 @@ public class Game {
 
         Bitmap snowmanBitmap = Bitmap.createScaledBitmap(
                 BitmapFactory.decodeResource(resources, R.drawable.snowman, options),
-                screen.width() / 22 * 9, screen.height() / 4 * 3, false);
-        player = new Player(snowmanBitmap, screen, 1);
+                values.getSnowmanWidth(), values.getSnowmanHeight(), false);
+        player = new Player(snowmanBitmap, values, 1);
         player.createAnimator(snowmanBitmap, 4, 3, 30, 30, false);
         player.startAnimation();
 
         background = new ScrollableBackground( Bitmap.createScaledBitmap(
                 BitmapFactory.decodeResource(resources, R.drawable.background, options),
-                screen.width(), screen.height(), false),
-                new Rect( 0, 0, screen.width(), screen.height()));
+                values.getWidth(), values.getHeight(), false),
+                values.getBackgroundRect());
 
         pauseButton = new Sprite(BitmapFactory.decodeResource(resources, R.drawable.pause, options),
-                new Rect(screen.width() / 10 * 9, screen.height() / 50,
-                        screen.width() / 50 * 49, screen.height() / 450 * 59));
+                values.getPauseButtonRect());
 
-        scoreText = new ScoreText(screen, resources);
+        scoreText = new ScoreText(values, resources);
 
         generateObstacle();
     }
 
     public void generateObstacle() {
-        Obstacle obstacle = new Obstacle(screen, resources);
+        Obstacle obstacle = new Obstacle(values, resources);
         obstacles.add(obstacle);
 
         for (int i = 0; i < obstacles.size(); i++) {
@@ -162,8 +158,8 @@ public class Game {
     public Obstacle getLastObs() {
         return obstacles.get(obstacles.size() - 1);
     }
-    public Rect getScreen() {
-        return screen;
+    public int getObstacleDistance() {
+        return values.getObstacleDistance();
     }
 
     private void finishGame() {
@@ -175,8 +171,8 @@ public class Game {
 
         Bitmap snowmanBitmapDie = Bitmap.createScaledBitmap(
                 BitmapFactory.decodeResource(resources, R.drawable.snowman_die, options),
-                screen.width() / 22 * 9, screen.height() / 4 * 3, false);
-        player = new Player(snowmanBitmapDie, screen, player.getLine());
+                values.getSnowmanWidth(), values.getSnowmanHeight(), false);
+        player = new Player(snowmanBitmapDie, values, player.getLine());
 
         player.createAnimator(snowmanBitmapDie, 4, 3, 30, 30, false);
         player.startAnimation();

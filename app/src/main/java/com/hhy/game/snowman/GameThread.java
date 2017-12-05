@@ -27,7 +27,7 @@ public class GameThread extends Thread {
             }
 
             Obstacle lastObs = game.getLastObs();
-            if (lastObs.getCoordinates().getX() + lastObs.getWidth() <= game.getScreen().width() / 16 * 13) {
+            if (lastObs.getCoordinates().getX() + lastObs.getWidth() <= game.getObstacleDistance()) {
                 game.generateObstacle();
             }
 

@@ -1,13 +1,13 @@
 package com.hhy.game.snowman;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.hhy.game.snowman.game.Game;
+import com.hhy.game.snowman.game.Values;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -23,7 +23,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        game = new Game(getContext(), new Rect(0, 0, getWidth(), getHeight()), holder, getResources());
+        Values values = new Values(getWidth(), getHeight());
+        game = new Game(getContext(), values, holder, getResources());
         gameThread = new GameThread(game);
         gameThread.start();
     }

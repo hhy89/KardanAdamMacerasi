@@ -4,9 +4,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import com.hhy.game.snowman.R;
 
@@ -17,40 +15,41 @@ class ScoreText {
     private final Paint pauseTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private static Bitmap recordBitmap;
-    private Rect screen;
+    private Values values;
     private Resources resources;
 
-    ScoreText(Rect screen, Resources resources) {
-        this.screen = screen;
+    ScoreText(Values values, Resources resources) {
+        this.values = values;
         this.resources = resources;
         {
             scoresPaint.setColor(resources.getColor(R.color.colorText));
-            scoresPaint.setTextSize(screen.height() / 12);
+            scoresPaint.setTextSize(values.getScoreTextSize());
             scoresPaint.setTypeface(Typeface.SERIF);
         }
         {
             recordPaint.setColor(resources.getColor(R.color.colorText));
-            recordPaint.setTextSize(screen.height() / 18);
+            recordPaint.setTextSize(values.getRecordTextSize());
             recordPaint.setTypeface(Typeface.SERIF);
         }
         {
             pauseTextPaint.setColor(resources.getColor(R.color.colorText));
-            pauseTextPaint.setTextSize(screen.height() / 8);
+            pauseTextPaint.setTextSize(values.getPausedTextSize());
             pauseTextPaint.setTypeface(Typeface.SERIF);
         }
         recordBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.records),
-                screen.height() / 18,
-                screen.height() / 18, false);
+                values.getRecordImgWidth(),
+                values.getRecordImgHeight(), false);
     }
 
     void drawScore(Canvas canvas, String text) {
-        canvas.drawText(text, screen.width() / 100, screen.height() / 100 + scoresPaint.getTextSize(), scoresPaint);
+        canvas.drawText(text, values.getScoreTextX(), values.getScoreTextY() + scoresPaint.getTextSize(), scoresPaint);
     }
     void drawRecord(Canvas canvas, String text) {
-        canvas.drawBitmap(recordBitmap, screen.width() / 100, screen.height() / 9, drawingPaint);
-        canvas.drawText(text, screen.width() / 100 + recordBitmap.getWidth(), screen.height() / 9 + recordPaint.getTextSize(), recordPaint);
+        canvas.drawBitmap(recordBitmap, values.getRecordX(), values.getRecordY(), drawingPaint);
+        canvas.drawText(text, values.getRecordX() + recordBitmap.getWidth(),
+                values.getRecordY() + recordPaint.getTextSize(), recordPaint);
     }
     void drawPause(Canvas canvas) {
-        canvas.drawText(resources.getString(R.string.pause), screen.width() / 10 * 3, screen.height() / 7, pauseTextPaint);
+        canvas.drawText(resources.getString(R.string.pause), values.getPausedTextX(), values.getPausedTextY(), pauseTextPaint);
     }
 }

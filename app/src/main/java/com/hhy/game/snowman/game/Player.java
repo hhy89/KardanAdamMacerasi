@@ -20,20 +20,15 @@ public class Player implements IAnimatable {
     private static Vector2 PLAYER_COORDINATES_LINE_MIDDLE;
     private static Vector2 PLAYER_COORDINATES_LINE_TOP;
 
-    Player(Bitmap image, Rect screen, int line) {
+    Player(Bitmap image, Values values, int line) {
         this.bitmap = image;
         this.line = line;
         this.width = bitmap.getWidth() / 4;
         this.height = bitmap.getHeight() / 3;
 
-        int LINE_BOTTOM_Y = screen.height() - screen.height() / 100 * 3;
-        int LINE_MIDDLE_Y = screen.height() - screen.height() / 40 * 7;
-        int LINE_TOP_Y = screen.height() - screen.height() / 200 * 63;
-        int PLAYER_HEIGHT = screen.height() / 30 * 7;
-
-        PLAYER_COORDINATES_LINE_BOTTOM = new Vector2(screen.width() / 40, LINE_BOTTOM_Y - PLAYER_HEIGHT);
-        PLAYER_COORDINATES_LINE_MIDDLE = new Vector2(screen.width() / 40, LINE_MIDDLE_Y - PLAYER_HEIGHT);
-        PLAYER_COORDINATES_LINE_TOP = new Vector2(screen.width() / 40, LINE_TOP_Y - PLAYER_HEIGHT);
+        PLAYER_COORDINATES_LINE_BOTTOM = new Vector2(values.getSnowmanX(), values.getLineBottomY() - height);
+        PLAYER_COORDINATES_LINE_MIDDLE = new Vector2(values.getSnowmanX(), values.getLineMiddleY() - height);
+        PLAYER_COORDINATES_LINE_TOP = new Vector2(values.getSnowmanX(), values.getLineTopY() - height);
 
         changeCoordinates();
     }
@@ -89,7 +84,7 @@ public class Player implements IAnimatable {
 
     Rect getBoundingRectangle() {
         return new Rect(coordinates.getX() + width / 3, coordinates.getY(),
-                coordinates.getX() + width - width / 3, coordinates.getY() + height);
+                coordinates.getX() + width / 3 * 2, coordinates.getY() + height);
     }
 
     @Override

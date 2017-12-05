@@ -10,7 +10,7 @@ import com.hhy.game.snowman.R;
 import java.util.Random;
 
 public class Obstacle {
-    private Rect screen;
+    private Values values;
     private Resources resources;
     private Paint drawingPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final int OBSTACLE_TYPE_STUMP = 0;
@@ -27,8 +27,8 @@ public class Obstacle {
     private int obstacleType;
     private int line;
 
-    Obstacle(Rect screen, Resources resources) {
-        this.screen = screen;
+    Obstacle(Values values, Resources resources) {
+        this.values = values;
         this.resources = resources;
 
         Random random = new Random();
@@ -47,41 +47,33 @@ public class Obstacle {
         switch (obstacleType) {
             case OBSTACLE_TYPE_STUMP:
                 this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.stump),
-                        screen.width() / 11,
-                        screen.height() / 100 * 7, false);
+                        values.getStumpWidth(), values.getStumpHeight(), false);
                 break;
             case OBSTACLE_TYPE_STONES:
                 this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.stones),
-                        screen.width() / 20 * 3,
-                        screen.height() / 10, false);
+                        values.getStoneWidth(), values.getStoneHeight(), false);
                 break;
             case OBSTACLE_TYPE_LOG:
                 this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.log),
-                        screen.width() / 4,
-                        screen.height() / 5, false);
+                        values.getLogWidth(), values.getLogHeight(), false);
                 break;
             case OBSTACLE_TYPE_BONFIRE:
                 this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.bonfire),
-                        screen.width() / 10,
-                        screen.height() / 5, false);
+                        values.getBonfireWidth(), values.getBonfireHeight(), false);
                 break;
         }
     }
 
     private void initializeCoordinates() {
-        int LINE_BOTTOM_Y = screen.height() - screen.height() / 100 * 3;
-        int LINE_MIDDLE_Y = screen.height() - screen.height() / 40 * 7;
-        int LINE_TOP_Y = screen.height() - screen.height() / 200 * 63;
-
         switch (line) {
             case LINE_BOTTOM:
-                this.coordinates.set(screen.width(), LINE_BOTTOM_Y - height);
+                this.coordinates.set(values.getWidth(), values.getLineBottomY() - height);
                 break;
             case LINE_MIDDLE:
-                this.coordinates.set(screen.width(), LINE_MIDDLE_Y - height);
+                this.coordinates.set(values.getWidth(), values.getLineMiddleY() - height);
                 break;
             case LINE_TOP:
-                this.coordinates.set(screen.width(), LINE_TOP_Y - height);
+                this.coordinates.set(values.getWidth(), values.getLineTopY() - height);
                 break;
         }
     }

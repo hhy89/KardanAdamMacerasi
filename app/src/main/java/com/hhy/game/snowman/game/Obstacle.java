@@ -20,7 +20,7 @@ public class Obstacle {
     private static final int LINE_BOTTOM = 0;
     private static final int LINE_MIDDLE = 1;
     private static final int LINE_TOP = 2;
-    private Vector2 coordinates = new Vector2(0, 0);
+    private VectorXY coordinates = new VectorXY(0, 0);
     private Bitmap bitmap;
     private int width;
     private int height;
@@ -37,8 +37,8 @@ public class Obstacle {
 
         initializeBitmap();
 
-        this.width = bitmap.getWidth();
-        this.height = bitmap.getHeight();
+        width = bitmap.getWidth();
+        height = bitmap.getHeight();
 
         initializeCoordinates();
     }
@@ -46,19 +46,19 @@ public class Obstacle {
     private void initializeBitmap() {
         switch (obstacleType) {
             case OBSTACLE_TYPE_STUMP:
-                this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.stump),
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.stump),
                         values.getStumpWidth(), values.getStumpHeight(), false);
                 break;
             case OBSTACLE_TYPE_STONES:
-                this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.stones),
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.stones),
                         values.getStoneWidth(), values.getStoneHeight(), false);
                 break;
             case OBSTACLE_TYPE_LOG:
-                this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.log),
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.log),
                         values.getLogWidth(), values.getLogHeight(), false);
                 break;
             case OBSTACLE_TYPE_BONFIRE:
-                this.bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.bonfire),
+                bitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.bonfire),
                         values.getBonfireWidth(), values.getBonfireHeight(), false);
                 break;
         }
@@ -67,13 +67,13 @@ public class Obstacle {
     private void initializeCoordinates() {
         switch (line) {
             case LINE_BOTTOM:
-                this.coordinates.set(values.getWidth(), values.getLineBottomY() - height);
+                coordinates.set(values.getWidth(), values.getLineBottomY() - height);
                 break;
             case LINE_MIDDLE:
-                this.coordinates.set(values.getWidth(), values.getLineMiddleY() - height);
+                coordinates.set(values.getWidth(), values.getLineMiddleY() - height);
                 break;
             case LINE_TOP:
-                this.coordinates.set(values.getWidth(), values.getLineTopY() - height);
+                coordinates.set(values.getWidth(), values.getLineTopY() - height);
                 break;
         }
     }
@@ -83,11 +83,11 @@ public class Obstacle {
     }
 
     public int getWidth() {
-        return this.width;
+        return width;
     }
 
-    public Vector2 getCoordinates() {
-        return this.coordinates;
+    public VectorXY getCoordinates() {
+        return coordinates;
     }
 
     void update(int speed) {

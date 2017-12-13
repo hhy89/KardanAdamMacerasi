@@ -21,21 +21,17 @@ class ScoreText {
     ScoreText(Values values, Resources resources) {
         this.values = values;
         this.resources = resources;
-        {
-            scoresPaint.setColor(resources.getColor(R.color.colorText));
-            scoresPaint.setTextSize(values.getScoreTextSize());
-            scoresPaint.setTypeface(Typeface.SERIF);
-        }
-        {
-            recordPaint.setColor(resources.getColor(R.color.colorText));
-            recordPaint.setTextSize(values.getRecordTextSize());
-            recordPaint.setTypeface(Typeface.SERIF);
-        }
-        {
-            pauseTextPaint.setColor(resources.getColor(R.color.colorText));
-            pauseTextPaint.setTextSize(values.getPausedTextSize());
-            pauseTextPaint.setTypeface(Typeface.SERIF);
-        }
+
+        scoresPaint.setColor(resources.getColor(R.color.colorText));
+        scoresPaint.setTextSize(values.getScoreTextSize());
+        scoresPaint.setTypeface(Typeface.SERIF);
+        recordPaint.setColor(resources.getColor(R.color.colorText));
+        recordPaint.setTextSize(values.getRecordTextSize());
+        recordPaint.setTypeface(Typeface.SERIF);
+        pauseTextPaint.setColor(resources.getColor(R.color.colorText));
+        pauseTextPaint.setTextSize(values.getPausedTextSize());
+        pauseTextPaint.setTypeface(Typeface.SERIF);
+
         recordBitmap = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.records),
                 values.getRecordImgWidth(),
                 values.getRecordImgHeight(), false);

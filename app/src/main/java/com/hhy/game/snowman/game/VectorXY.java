@@ -1,10 +1,10 @@
 package com.hhy.game.snowman.game;
 
-public class Vector2 {
+public class VectorXY {
     private int x;
     private int y;
 
-    Vector2(int x, int y) {
+    VectorXY(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -22,7 +22,7 @@ public class Vector2 {
         this.y = y;
     }
 
-    void set(Vector2 src) {
+    void set(VectorXY src) {
         this.x = src.getX();
         this.y = src.getY();
     }

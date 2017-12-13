@@ -5,30 +5,30 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Player implements IAnimatable {
+class Player {
     private Animator animator;
     private int line;
     private Bitmap bitmap;
     private int width;
     private int height;
-    private Vector2 coordinates = new Vector2(0, 0);
+    private VectorXY coordinates = new VectorXY(0, 0);
     private final Paint drawingPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private static final int LINE_BOTTOM = 0;
     private static final int LINE_MIDDLE = 1;
     private static final int LINE_TOP = 2;
-    private static Vector2 PLAYER_COORDINATES_LINE_BOTTOM;
-    private static Vector2 PLAYER_COORDINATES_LINE_MIDDLE;
-    private static Vector2 PLAYER_COORDINATES_LINE_TOP;
+    private static VectorXY PLAYER_COORDINATES_LINE_BOTTOM;
+    private static VectorXY PLAYER_COORDINATES_LINE_MIDDLE;
+    private static VectorXY PLAYER_COORDINATES_LINE_TOP;
 
     Player(Bitmap image, Values values, int line) {
-        this.bitmap = image;
+        bitmap = image;
         this.line = line;
-        this.width = bitmap.getWidth() / 4;
-        this.height = bitmap.getHeight() / 3;
+        width = bitmap.getWidth() / 4;
+        height = bitmap.getHeight() / 3;
 
-        PLAYER_COORDINATES_LINE_BOTTOM = new Vector2(values.getSnowmanX(), values.getLineBottomY() - height);
-        PLAYER_COORDINATES_LINE_MIDDLE = new Vector2(values.getSnowmanX(), values.getLineMiddleY() - height);
-        PLAYER_COORDINATES_LINE_TOP = new Vector2(values.getSnowmanX(), values.getLineTopY() - height);
+        PLAYER_COORDINATES_LINE_BOTTOM = new VectorXY(values.getSnowmanX(), values.getLineBottomY() - height);
+        PLAYER_COORDINATES_LINE_MIDDLE = new VectorXY(values.getSnowmanX(), values.getLineMiddleY() - height);
+        PLAYER_COORDINATES_LINE_TOP = new VectorXY(values.getSnowmanX(), values.getLineTopY() - height);
 
         changeCoordinates();
     }
@@ -36,13 +36,13 @@ public class Player implements IAnimatable {
     private void changeCoordinates() {
         switch (line) {
             case LINE_BOTTOM:
-                this.coordinates.set(PLAYER_COORDINATES_LINE_BOTTOM);
+                coordinates.set(PLAYER_COORDINATES_LINE_BOTTOM);
                 break;
             case LINE_MIDDLE:
-                this.coordinates.set(PLAYER_COORDINATES_LINE_MIDDLE);
+                coordinates.set(PLAYER_COORDINATES_LINE_MIDDLE);
                 break;
             case LINE_TOP:
-                this.coordinates.set(PLAYER_COORDINATES_LINE_TOP);
+                coordinates.set(PLAYER_COORDINATES_LINE_TOP);
                 break;
         }
     }
@@ -87,35 +87,30 @@ public class Player implements IAnimatable {
                 coordinates.getX() + width / 3 * 2, coordinates.getY() + height);
     }
 
-    @Override
-    public void createAnimator(Bitmap bitmapWithFrames,
+    void createAnimator(Bitmap bitmapWithFrames,
                                int numberOfFramesHorizontally,
                                int numberOfFramesVertically, int updateTimeMillis,
-                               double timeForOneFrameMillis, boolean isDisposable) {
+                               double timeForOneFrameMillis) {
         if (animator == null)
-            animator = new Animator(this, bitmapWithFrames, numberOfFramesHorizontally, numberOfFramesVertically, updateTimeMillis, timeForOneFrameMillis, false);
+            animator = new Animator(this, bitmapWithFrames, numberOfFramesHorizontally, numberOfFramesVertically, updateTimeMillis, timeForOneFrameMillis);
     }
 
-    @Override
-    public void destroyAnimator() {
+    void destroyAnimator() {
         animator.stopAnimation();
         animator = null;
     }
 
-    @Override
-    public void startAnimation() {
+    void startAnimation() {
         if ((animator != null) && (!animator.isRunning()))
             animator.startAnimation();
     }
 
-    @Override
-    public void stopAnimation() {
+    void stopAnimation() {
         if ((animator != null) && (animator.isRunning()))
             animator.stopAnimation();
     }
 
-    @Override
-    public void setBitmap(Bitmap bitmap) {
+    void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
 }

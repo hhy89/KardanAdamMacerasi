@@ -25,7 +25,7 @@ public class Game {
     private ScrollableBackground background;
     private Player player;
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
-    private Sprite pauseButton;
+    private Bitmap pauseButton;
     private ScoreText scoreText;
     private BitmapFactory.Options options;
 
@@ -115,7 +115,9 @@ public class Game {
 
         player.draw(canvas);
 
-        pauseButton.draw(canvas);
+        // pause button
+        canvas.drawBitmap(pauseButton, null, values.getPauseButtonRect(), null);
+
         scoreText.drawRecord(canvas, String.valueOf(recordScore));
         scoreText.drawScore(canvas, String.valueOf(currentScore));
         if (!gameRunning) scoreText.drawPause(canvas);
@@ -130,7 +132,7 @@ public class Game {
                 BitmapFactory.decodeResource(resources, R.drawable.snowman, options),
                 values.getSnowmanWidth(), values.getSnowmanHeight(), false);
         player = new Player(snowmanBitmap, values, 1);
-        player.createAnimator(snowmanBitmap, 4, 3, 30, 30, false);
+        player.createAnimator(snowmanBitmap, 4, 3, 30, 30);
         player.startAnimation();
 
         background = new ScrollableBackground( Bitmap.createScaledBitmap(
@@ -138,8 +140,8 @@ public class Game {
                 values.getWidth(), values.getHeight(), false),
                 values.getBackgroundRect());
 
-        pauseButton = new Sprite(BitmapFactory.decodeResource(resources, R.drawable.pause, options),
-                values.getPauseButtonRect());
+        pauseButton = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(resources, R.drawable.pause, options),
+                values.getPausedButtonWidth(), values.getPausedButtonHeight(), false);
 
         scoreText = new ScoreText(values, resources);
 
@@ -174,7 +176,7 @@ public class Game {
                 values.getSnowmanWidth(), values.getSnowmanHeight(), false);
         player = new Player(snowmanBitmapDie, values, player.getLine());
 
-        player.createAnimator(snowmanBitmapDie, 4, 3, 30, 30, false);
+        player.createAnimator(snowmanBitmapDie, 4, 3, 30, 30);
         player.startAnimation();
 
         sleep(240);

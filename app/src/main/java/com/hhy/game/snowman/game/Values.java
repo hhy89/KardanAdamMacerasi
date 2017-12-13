@@ -23,10 +23,7 @@ public class Values {
     Rect getPauseButtonRect() {
         int left = width / 10 * 9;
         int top = height / 50;
-        int right = left + getPausedButtonWidth();
-        int bottom = top + getPausedButtonHeight();
-
-        return new Rect(left, top, right, bottom);
+        return new Rect(left, top, left + getPausedButtonWidth(), top + getPausedButtonHeight());
     }
     int getPausedButtonWidth() {
         return width / 11;

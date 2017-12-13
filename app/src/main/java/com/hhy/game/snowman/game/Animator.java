@@ -3,8 +3,6 @@ package com.hhy.game.snowman.game;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 class Animator {
     private Bitmap bitmapWithFrames;
@@ -17,22 +15,16 @@ class Animator {
     private volatile boolean isRunning;
     private int frameWidth;
     private int frameHeight;
-    private IAnimatable animatable;
+    private Player player;
 
-    Animator(IAnimatable animatable, Bitmap bitmapWithFrames, int numberOfFramesHorizontally,
+    Animator(Player player, Bitmap bitmapWithFrames, int numberOfFramesHorizontally,
                     int numberOfFramesVertically, int updateTimeMillis,
-                    double timeForOneFrameMillis, boolean isDisposable) {
-        this.animatable = animatable;
+                    double timeForOneFrameMillis) {
+        this.player = player;
         this.bitmapWithFrames = bitmapWithFrames;
         this.updateTimeMillis = updateTimeMillis;
         this.timeForOneFrameMillis = timeForOneFrameMillis;
         splitBitmapIntoFrames(bitmapWithFrames, numberOfFramesHorizontally, numberOfFramesVertically, frames);
-
-        if (isDisposable) {
-            Timer inspectorTimer = new Timer(true);
-            InspectorTimerTask inspectorTimerTask = new InspectorTimerTask();
-            inspectorTimer.schedule(inspectorTimerTask, 0, Math.round(updateTimeMillis));
-        }
     }
 
     void startAnimation() {
@@ -70,20 +62,6 @@ class Animator {
             }
     }
 
-    private class InspectorTimerTask extends TimerTask {
-        private int elapsedTime;
-
-        @Override
-        public void run() {
-            elapsedTime += updateTimeMillis;
-
-            if (elapsedTime >= updateTimeMillis * 12) {
-                stopAnimation();
-                this.cancel();
-            }
-        }
-    }
-
     private class AnimatorThread extends Thread {
         private Bitmap newBitmap;
 
@@ -100,7 +78,7 @@ class Animator {
                         frames.get(currentFrame).top, frameWidth,
                         frameHeight);
 
-                animatable.setBitmap(newBitmap);
+                player.setBitmap(newBitmap);
 
                 try {
                     sleep(updateTimeMillis);

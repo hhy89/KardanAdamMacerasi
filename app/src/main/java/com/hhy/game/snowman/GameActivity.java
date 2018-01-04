@@ -23,7 +23,8 @@ public class GameActivity extends Activity {
     public void onBackPressed() {
         view.pauseGame();
 
-        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }

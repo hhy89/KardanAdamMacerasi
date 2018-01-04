@@ -186,6 +186,7 @@ public class Game {
         Intent intent = new Intent(context, GameOverActivity.class);
         intent.putExtra("score", score);
         intent.putExtra("record", record);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
 
     }

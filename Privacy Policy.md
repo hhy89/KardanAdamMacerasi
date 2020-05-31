@@ -82,4 +82,4 @@ You are advised to review this Privacy Policy periodically for any changes. Chan
 
 # Contact Us
 If you have any questions about this Privacy Policy, please contact us:
-By email: hhy89@mailinator.com
+By email: hhy89@hotmail.com

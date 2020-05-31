@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hhy.game.snowman.GameActivity">
+    tools:context="com.hhy.game.snowman.GameActivity"
+    tools:ignore="MissingDefaultResource">
 
     <com.hhy.game.snowman.GameView
         android:id="@+id/gameView"

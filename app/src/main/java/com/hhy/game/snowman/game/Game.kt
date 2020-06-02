@@ -15,7 +15,7 @@ import com.hhy.game.snowman.GameOverActivity
 import com.hhy.game.snowman.R
 import kotlin.math.roundToInt
 
-@Suppress("NAME_SHADOWING") class Game(private val context: Context, private val values: Values, private val holder: SurfaceHolder,
+class Game(private val context: Context, private val values: Values, private val holder: SurfaceHolder,
                     private val resources: Resources) {
     private val options: BitmapFactory.Options = BitmapFactory.Options()
     private lateinit var background: ScrollableBackground
@@ -161,8 +161,8 @@ import kotlin.math.roundToInt
         // only this works perfectly
         val iterator = obstacles.iterator()
         while (iterator.hasNext()) {
-            val obstacle = iterator.next()
-            if (obstacle.screenOff) {
+            val obs = iterator.next()
+            if (obs.screenOff) {
                 iterator.remove()
             }
         }

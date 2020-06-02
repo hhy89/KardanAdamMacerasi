@@ -3,7 +3,7 @@ package com.hhy.game.snowman.game
 import android.content.res.Resources
 import android.graphics.*
 import com.hhy.game.snowman.R
-import java.util.*
+import kotlin.random.Random
 
 class Obstacle internal constructor(private val values: Values, private val resources: Resources) {
     private val drawingPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -69,9 +69,8 @@ class Obstacle internal constructor(private val values: Values, private val reso
     }
 
     init {
-        val random = Random()
-        obstacleType = random.nextInt(4)
-        line = random.nextInt(3)
+        obstacleType = Random.nextInt(4)
+        line = Random.nextInt(3)
         initializeBitmap()
         width = bitmap.width
         height = bitmap.height

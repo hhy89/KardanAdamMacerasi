@@ -25,7 +25,15 @@ internal class Animator(private val player: Player, private val bitmapWithFrames
 
     fun stopAnimation() {
         isRunning = false
-        animatorThread.join()
+        var flag = true
+
+        while (flag) {
+            try {
+                animatorThread.join()
+                flag = false
+            } catch (ignored: Exception) {
+            }
+        }
     }
 
     private fun splitBitmapIntoFrames(source: Bitmap, numberOfFramesHorizontally: Int, numberOfFramesVertically: Int,
@@ -58,7 +66,10 @@ internal class Animator(private val player: Player, private val bitmapWithFrames
                 )
                 player.setBitmap(newBitmap)
 
-                sleep(updateTimeMillis.toLong())
+                try {
+                    sleep(updateTimeMillis.toLong())
+                } catch (ignored: Exception) {
+                }
             }
         }
     }

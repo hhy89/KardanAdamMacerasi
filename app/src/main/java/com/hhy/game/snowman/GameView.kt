@@ -9,23 +9,29 @@ import com.hhy.game.snowman.game.Game
 import com.hhy.game.snowman.game.Values
 
 class GameView(context: Context, attrs: AttributeSet): SurfaceView(context, attrs), SurfaceHolder.Callback {
-    private lateinit var gameThread: GameThread
+    private var gameThread: GameThread? = null
     private lateinit var game: Game
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         val values = Values(width, height)
         game = Game(context, values, holder, resources)
         gameThread = GameThread(game)
-        gameThread.start()
+        gameThread!!.start()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        gameThread.run {
-            shutdown()
-            join()
+        if (gameThread != null) {
+            gameThread!!.shutdown()
+            while (gameThread != null) {
+                try {
+                    gameThread!!.join()
+                    gameThread = null
+                } catch (ignored: InterruptedException) {
+                }
+            }
         }
     }
 

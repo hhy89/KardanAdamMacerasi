@@ -1,7 +1,6 @@
 package com.hhy.game.snowman.game
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -16,7 +15,7 @@ import com.hhy.game.snowman.R
 import kotlin.math.roundToInt
 
 class Game(private val context: Context, private val values: Values, private val holder: SurfaceHolder,
-                    private val resources: Resources) {
+           private val resources: Resources) {
     private val options: BitmapFactory.Options = BitmapFactory.Options()
     private lateinit var background: ScrollableBackground
     private lateinit var pauseButton: Bitmap
@@ -140,7 +139,7 @@ class Game(private val context: Context, private val values: Values, private val
                 values.pausedButtonWidth, values.pausedButtonHeight, false)
 
         // score text. can u beat me?
-        scoreText = ScoreText(values, resources)
+        scoreText = ScoreText(context, values, resources)
 
         generateObstacle()
     }
@@ -212,14 +211,14 @@ class Game(private val context: Context, private val values: Values, private val
     // save record
     private fun saveRecord() {
         if (currentScore > recordScore) {
-            val sharedPreferences = context.getSharedPreferences("snowman", MODE_PRIVATE)
+            val sharedPreferences = context.getSharedPreferences("snowman", Context.MODE_PRIVATE)
             sharedPreferences.edit().putInt("record_key", currentScore).apply()
         }
     }
 
     // load record
     private fun loadRecord() {
-        val sharedPreferences = context.getSharedPreferences("snowman", MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences("snowman", Context.MODE_PRIVATE)
         recordScore = sharedPreferences.getInt("record_key", 0)
     }
 
